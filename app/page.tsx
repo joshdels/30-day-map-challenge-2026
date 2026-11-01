@@ -30,7 +30,7 @@ export default function Home() {
             <p>
               The official home of <strong>#30DayMapChallenge</strong> is a
               daily mapping challenge open to everyone. Participants create one
-              map a day for 30 days—each based on a different theme—and share it
+              map a day for 30 days each based on a different theme and share it
               on social media.
             </p>
             <p>
@@ -77,7 +77,7 @@ export default function Home() {
             const live = isPublished(day);
             return (
               <Link
-                key={prompt}
+                key={day}
                 href={dayPath(day)}
                 className={live ? "prompt-card live" : "prompt-card"}
               >
@@ -85,7 +85,9 @@ export default function Home() {
                   <span className="prompt-day">
                     {String(day).padStart(2, "0")}
                   </span>
-                  <span className="prompt-number">11 · 2026</span>
+                  <span className="prompt-number">
+                    NOV {String(day).padStart(2, "0")} · 2026
+                  </span>
                 </div>
                 <strong>{prompt}</strong>
                 <span className="prompt-state">

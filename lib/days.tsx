@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { PhilippinesPoints } from "@/components/philippines-points";
 
 /**
  * Source attribution for an operational layer / dataset.
@@ -57,11 +56,14 @@ export const days: Partial<Record<number, DayContent>> = {
   1: {
     dek: "What if every point held a story?",
     note: "A study of place through the smallest cartographic mark—mapping the Philippines as a constellation of lived moments.",
+    figLabel: "DATA / CITIES — NAMRIA CENTROIDS",
     caption: "Each luminous point represents a place—not as a statistic, but as a beginning.",
     media: {
-      kind: "custom",
-      illustrative: true, // synthetic SVG geometry, not measured data
-      render: () => <PhilippinesPoints numbered />,
+      kind: "image",
+      src: "/days/01-points.png",
+      alt: "Map of the Philippines rendered as a constellation of black dots, forming the silhouette of Luzon, the Visayas and Mindanao.",
+      width: 2161,
+      height: 3549,
     },
     essay: [
       {
