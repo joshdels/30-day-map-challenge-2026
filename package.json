@@ -15,7 +15,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@arcgis/core": "^4.33.11",
     "@base-ui/react": "^1.7.0",
+    "@esri/calcite-components": "^3.3.3",
     "@hookform/resolvers": "^5.7.1",
     "@shadcn/react": "^0.3.0",
     "class-variance-authority": "0.7.1",

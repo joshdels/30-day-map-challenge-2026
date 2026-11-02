@@ -65,6 +65,11 @@ export default async function DayPage({
         figLabel={figLabel}
         caption={content.caption}
         day={day}
+        bleed={
+          "bleed" in content.media
+            ? content.media.bleed
+            : content.media.kind !== "custom"
+        }
       />
 
       <section className="essay">

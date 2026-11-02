@@ -71,64 +71,88 @@ export function DayMediaFigure({
   figLabel,
   caption,
   day,
+  bleed,
 }: {
   media: DayMedia;
   figLabel: string;
   caption: string;
   day: number;
+  /**
+   * Full-bleed media: the figure fills the whole stage edge-to-edge (no acid
+   * background, no letterbox padding) and the caption/credit render BELOW it.
+   * Defaults on for image/video/webgis; `custom` days opt in via `media.bleed`.
+   */
+  bleed?: boolean;
 }) {
   const credit = "credit" in media ? media.credit : undefined;
   const illustrative = "illustrative" in media ? media.illustrative : false;
+  const mediaBleed = "bleed" in media ? media.bleed : undefined;
+  const isBleed = bleed ?? mediaBleed ?? media.kind !== "custom";
+
+  const captionBlock = (
+    <div className={isBleed ? "map-caption below" : "map-caption"}>
+      <span>{figLabel}</span>
+      <p>{caption}</p>
+      {illustrative && (
+        <p className="illustrative-tag">
+          Illustrative graphic — synthetic geometry, not measured data.
+        </p>
+      )}
+      {credit && <Credit credit={credit} />}
+    </div>
+  );
 
   return (
-    <section className="map-stage" aria-label={`Day ${day} map: ${caption}`}>
-      <div className="map-meta">
-        <span>122&deg; E</span>
-        <span>PH / {String(day).padStart(2, "0")}</span>
-        <span>6&deg; N</span>
-      </div>
+    <>
+      <section
+        className={isBleed ? "map-stage bleed" : "map-stage"}
+        aria-label={`Day ${day} map: ${caption}`}
+      >
+        <div className="map-meta">
+          <span>122&deg; E</span>
+          <span>PH / {String(day).padStart(2, "0")}</span>
+          <span>6&deg; N</span>
+        </div>
 
-      <div className="map-media">
-        {media.kind === "custom" && media.render()}
+        <div className="map-media">
+          {media.kind === "custom" && media.render()}
 
-        {media.kind === "image" && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            className="day-media-img"
-            src={media.src}
-            alt={media.alt}
-            width={media.width}
-            height={media.height}
-            loading="lazy"
-          />
-        )}
+          {media.kind === "image" && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              className="day-media-img"
+              src={media.src}
+              alt={media.alt}
+              width={media.width}
+              height={media.height}
+              loading="lazy"
+            />
+          )}
 
-        {media.kind === "video" && (
-          <VideoMedia src={media.src} poster={media.poster} embed={media.embed} />
-        )}
+          {media.kind === "video" && (
+            <VideoMedia
+              src={media.src}
+              poster={media.poster}
+              embed={media.embed}
+            />
+          )}
 
-        {media.kind === "webgis" && (
-          <iframe
-            className="day-media-frame"
-            src={media.embedUrl}
-            title={media.title}
-            loading="lazy"
-            allow="fullscreen"
-            allowFullScreen
-          />
-        )}
-      </div>
+          {media.kind === "webgis" && (
+            <iframe
+              className="day-media-frame"
+              src={media.embedUrl}
+              title={media.title}
+              loading="lazy"
+              allow="fullscreen"
+              allowFullScreen
+            />
+          )}
+        </div>
 
-      <div className="map-caption">
-        <span>{figLabel}</span>
-        <p>{caption}</p>
-        {illustrative && (
-          <p className="illustrative-tag">
-            Illustrative graphic — synthetic geometry, not measured data.
-          </p>
-        )}
-        {credit && <Credit credit={credit} />}
-      </div>
-    </section>
+        {!isBleed && captionBlock}
+      </section>
+      {/* Full-bleed days show the media only — no on-page caption/credit block.
+          Provenance is still recorded in the registry `credit` field. */}
+    </>
   );
 }

@@ -26,6 +26,15 @@ That's it. The homepage gallery card for that day automatically flips to "live".
 
 ---
 
+## Full-bleed media (the stage rule)
+
+Published media **fills the whole stage edge-to-edge** — no coloured backing
+showing through, no padding, no partial sizing. The caption + `credit` render
+*below* the stage. This is automatic for `image`, `video`, and `webgis`. A
+`custom` day (e.g. an in-repo ArcGIS map) opts in by setting `bleed: true` on the
+media object; omit it (or leave it `false`) to keep the framed editorial look
+Day 01 uses. See AGENTS.md → "Published media fills its stage".
+
 ## The four media kinds
 
 Pick exactly **one** `media.kind` per day.
