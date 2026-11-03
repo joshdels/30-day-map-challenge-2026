@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { TagumWatershedMap } from "@/components/maps/tagum-watershed";
+import { RegionsPovertyMap } from "@/components/maps/regions-poverty";
 
 /**
  * Source attribution for an operational layer / dataset.
@@ -110,6 +111,40 @@ export const days: Partial<Record<number, DayContent>> = {
       },
     ],
     publishedAt: "2026-11-02",
+  },
+  3: {
+    dek: "A polygon can hold a hard number.",
+    note: "The seventeen regions of the Philippines, each drawn as one representative province and shaded by its 2023 poverty incidence—from a 1.1% low in Metro Manila to 24.2% in the Zamboanga Peninsula.",
+    figLabel: "DATA / SOCIETY — POVERTY INCIDENCE 2023 (PSA)",
+    caption:
+      "Regional poverty incidence for 2023 (PSA), drawn as polygons. Pan, zoom and click a region; darker fills mark a larger share of the population living below the poverty line.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <RegionsPovertyMap />,
+      credit: {
+        source:
+          "PSA 2023 Full Year Official Poverty Statistics of the Philippines; administrative boundaries from OCHA/HDX Philippines COD-AB (v03)",
+        license:
+          "PSA statistics — open government data; HDX boundaries — CC BY-IGO 3.0",
+        retrieved: "2026-11-03",
+        coverage: "Philippines, 17 regions",
+        fields: "pov_incidence_2023 (poverty incidence among population, %)",
+        transformations:
+          "Regional poverty incidence joined to administrative polygons; each region represented by one province polygon; geometry simplified (~0.004°) and written as WGS 84 GeoJSON.",
+        url: "https://psa.gov.ph/statistics/poverty",
+      },
+    },
+    essay: [
+      {
+        heading: "Where the line falls, and who lives below it.",
+        body: "Poverty incidence is the share of a population whose income cannot meet basic food and non-food needs. In 2023 the Philippine Statistics Authority put that figure at roughly one in ten Filipinos nationally—but the national average hides a steep geography. Metro Manila reports 1.1%; the Zamboanga Peninsula and the Bangsamoro region climb past 23%.",
+      },
+      {
+        body: "This map is a study in polygons: each of the seventeen regions is rendered as a single representative province, shaded on a light-to-deep red ramp by its regional poverty incidence. The province stands in for its region—so read the colour, not the exact borders—and the pattern is unmistakable. Prosperity concentrates in and around the capital and the central Luzon–Calabarzon corridor; hardship deepens toward the southern and western edges of the archipelago.",
+      },
+    ],
+    publishedAt: "2026-11-03",
   },
 };
 
