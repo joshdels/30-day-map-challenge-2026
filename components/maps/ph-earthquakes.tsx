@@ -29,16 +29,6 @@ import { createElement, useEffect, useRef, useState } from "react";
 // Philippine archipelago centroid (WGS 84) — the initial view centre.
 const CENTER: [number, number] = [123.5, 12.2];
 
-// Magnitude → fill colour (light→deep red), a sequential ramp around the site
-// --red accent. Used as colour stops on the single-quake symbol; clusters take
-// their fill from the same ramp via the mean magnitude of their members.
-const MAG_STOPS: { value: number; color: string }[] = [
-  { value: 4.5, color: "#fcae91" },
-  { value: 5.5, color: "#fb6a4a" },
-  { value: 6.5, color: "#de2d26" },
-  { value: 7.5, color: "#a50f15" },
-];
-
 export function PhEarthquakesMap() {
   // ArcGIS takes full ownership of `mapNodeRef` and mutates its DOM directly.
   // React must never render children into that node (the status overlay and the
@@ -105,41 +95,27 @@ export function PhEarthquakesMap() {
         const quakes = new GeoJSONLayer({
           url: "/days/day04/earthquakes.geojson",
           title: "Earthquakes M4.5+ (2000–2026)",
-          // Single epicenter: a red circle sized and shaded by magnitude.
+          // Single epicenter: one translucent red disc. A FIXED symbol (no
+          // size/colour visual variables) — those would override the cluster
+          // bubble sizing and leave only the count labels visible.
           renderer: {
             type: "simple",
             symbol: {
               type: "simple-marker",
               style: "circle",
-              color: "#de2d26",
-              outline: { color: "rgba(255,255,255,0.75)", width: 0.5 },
+              size: 7,
+              color: "rgba(222, 45, 38, 0.65)",
+              outline: { color: "rgba(165, 15, 21, 0.9)", width: 0.5 },
             },
-            visualVariables: [
-              {
-                type: "size",
-                field: "mag",
-                legendOptions: { title: "Magnitude" },
-                stops: [
-                  { value: 4.5, size: 4 },
-                  { value: 5.5, size: 8 },
-                  { value: 6.5, size: 16 },
-                  { value: 7.8, size: 28 },
-                ],
-              } as __esri.SizeVariableProperties,
-              {
-                type: "color",
-                field: "mag",
-                stops: MAG_STOPS,
-              } as __esri.ColorVariableProperties,
-            ],
           },
-          // Built-in clustering: aggregate nearby epicenters into counted
-          // bubbles that take their fill from the members' mean magnitude.
+          // Built-in clustering: aggregate nearby epicenters into red bubbles
+          // sized by how many epicenters they hold (clusterMin→Max by count).
           featureReduction: {
             type: "cluster",
-            clusterRadius: "90px",
-            clusterMinSize: "18px",
-            clusterMaxSize: "54px",
+            clusterRadius: "80px",
+            clusterMinSize: "20px",
+            clusterMaxSize: "60px",
+            // Aggregate statistics the cluster popup can reference.
             // Aggregate statistics the cluster popup can reference.
             fields: [
               { name: "avg_mag", statisticType: "avg", onStatisticField: "mag" },

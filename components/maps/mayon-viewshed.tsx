@@ -122,7 +122,7 @@ export function MayonViewshedMap() {
           container: el,
           map: new Map({ basemap: gray, ground }),
           analyses: [analysis],
-          qualityProfile: "high",
+          qualityProfile: "medium",
           camera: {
             // An oblique vantage south-west of the cone, looking north-east
             // across the summit toward Albay Gulf.
@@ -150,8 +150,14 @@ export function MayonViewshedMap() {
           </dl>`;
         view.ui.add(sourceBox, "bottom-left");
 
-        // Keep the spinner up until the scene has finished its first draw.
-        await reactiveUtils.whenOnce(() => !view!.updating);
+        // Reveal the scene once it has drawn a first stable frame. A SceneView
+        // streaming global terrain can keep `updating` true indefinitely, so we
+        // race the "settled" signal against a hard timeout and show the map
+        // either way rather than spinning forever.
+        const settled = reactiveUtils
+          .whenOnce(() => view!.ready && !view!.updating)
+          .catch(() => {});
+        await Promise.race([settled, sleep(6000)]);
         if (!active) return;
 
         // Keep the spinner on screen for at least ~1s so the loading animation
