@@ -1,0 +1,12 @@
+{"type":"FeatureCollection","name":"prompting-only-gallery-atlas","features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[122.0,12.8]},"properties":{"day":1,"theme":"Points","subject":"NAMRIA city centroids — the country as a constellation"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[125.69,7.713]},"properties":{"day":2,"theme":"Lines","subject":"Tagum–Saug watershed, Strahler stream order"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[120.95,15.6]},"properties":{"day":3,"theme":"Polygons","subject":"Regional poverty incidence, 2023 (PSA)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[126.4,9.2]},"properties":{"day":4,"theme":"Clusters","subject":"Seismic hotspots along the Philippine Trench"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[123.6856,13.2572]},"properties":{"day":5,"theme":"Senses: Sight","subject":"Viewshed from the summit of Mayon"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[120.993,14.002]},"properties":{"day":6,"theme":"Vintage","subject":"Holocene volcanoes as an antique chart (Taal shown)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[123.8854,10.3157]},"properties":{"day":7,"theme":"10 minute map","subject":"The 17 regional capitals, fast and plain (Cebu shown)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[124.6,11.0]},"properties":{"day":8,"theme":"Utopia","subject":"A clean-energy grid built on existing renewables (Leyte geothermal)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[121.0,14.55]},"properties":{"day":9,"theme":"Urban–rural","subject":"Population density, 2024 — NCR vs. the uplands"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[121.9,11.6]},"properties":{"day":10,"theme":"Prompting only","subject":"This map — the gallery written entirely by prompting"}}
+]}

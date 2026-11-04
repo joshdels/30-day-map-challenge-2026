@@ -1,0 +1,19 @@
+{"type":"FeatureCollection","name":"ph-regional-capitals","features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[120.9842,14.5995]},"properties":{"city":"Manila","region":"National Capital Region (NCR)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[120.5960,16.4023]},"properties":{"city":"Baguio","region":"Cordillera Administrative Region (CAR)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[120.3166,16.6159]},"properties":{"city":"San Fernando","region":"Region I (Ilocos Region)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[121.7270,17.6132]},"properties":{"city":"Tuguegarao","region":"Region II (Cagayan Valley)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[120.6200,15.0794]},"properties":{"city":"San Fernando","region":"Region III (Central Luzon)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[121.1653,14.2117]},"properties":{"city":"Calamba","region":"Region IV-A (Calabarzon)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[121.1803,13.4117]},"properties":{"city":"Calapan","region":"Mimaropa Region"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[123.7438,13.1391]},"properties":{"city":"Legazpi","region":"Region V (Bicol Region)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[122.5621,10.7202]},"properties":{"city":"Iloilo City","region":"Region VI (Western Visayas)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[123.8854,10.3157]},"properties":{"city":"Cebu City","region":"Region VII (Central Visayas)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[125.0048,11.2444]},"properties":{"city":"Tacloban","region":"Region VIII (Eastern Visayas)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[123.4370,7.8257]},"properties":{"city":"Pagadian","region":"Region IX (Zamboanga Peninsula)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[124.6319,8.4542]},"properties":{"city":"Cagayan de Oro","region":"Region X (Northern Mindanao)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[125.4553,7.1907]},"properties":{"city":"Davao City","region":"Region XI (Davao Region)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[124.8469,6.5031]},"properties":{"city":"Koronadal","region":"Region XII (Soccsksargen)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[125.5406,8.9475]},"properties":{"city":"Butuan","region":"Region XIII (Caraga)"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[124.2310,7.2047]},"properties":{"city":"Cotabato City","region":"Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)"}}
+]}

@@ -1157,6 +1157,16 @@ button:focus-visible {
   position: absolute;
   inset: 0;
 }
+/* Day 06 "Vintage": tint the keyless grayscale relief tiles to aged sepia.
+   Scoped to the vintage map so no other day is affected. The parchment colour
+   below shows through tile gaps / the ocean. */
+.vintage-map {
+  background: #efe6d0;
+}
+.vintage-map .arcgis-map-node .esri-view-surface,
+.vintage-map .arcgis-map-node canvas {
+  filter: sepia(0.55) saturate(1.1) contrast(0.95) brightness(1.04);
+}
 .arcgis-map .esri-view {
   width: 100%;
   height: 100%;
