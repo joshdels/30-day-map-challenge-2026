@@ -46,52 +46,35 @@ export const dayMapConfigs: Record<number, MapConfig> = {
     ] },
   },
 
-  // 12 — Power. The whole electrical fleet, by fuel and capacity.
+  // 12 — Power. The physical electrical grid: transmission lines + substations.
   12: {
-    ariaLabel: "Map of all power plants in the Philippines by fuel and capacity",
+    ariaLabel: "Map of the Philippine electrical grid: transmission lines and substations",
     center: [122.8, 12.0],
     zoom: 5,
     basemap: "gray",
     fitToLayerIndex: 0,
     legend: true,
-    loadingLabel: "Loading power plants",
+    loadingLabel: "Loading the grid",
     layers: [
       {
-        url: "/days/day12/powerplants.geojson",
-        title: "Power plants",
+        url: "/days/day12/power-grid.geojson",
+        title: "Electrical grid",
         renderer: {
           type: "unique-value",
-          field: "fuel",
-          legendOptions: { title: "Fuel" },
+          field: "kind",
+          legendOptions: { title: "Grid element" },
           uniqueValueInfos: [
-            { value: "Coal", symbol: { type: "simple-marker", style: "circle", color: "#3f3f3f", outline: white06 } },
-            { value: "Oil", symbol: { type: "simple-marker", style: "circle", color: "#8c6d31", outline: white06 } },
-            { value: "Gas", symbol: { type: "simple-marker", style: "circle", color: "#e08214", outline: white06 } },
-            { value: "Geothermal", symbol: { type: "simple-marker", style: "circle", color: "#e4322b", outline: white06 } },
-            { value: "Hydro", symbol: { type: "simple-marker", style: "circle", color: "#2b6cb0", outline: white06 } },
-            { value: "Solar", symbol: { type: "simple-marker", style: "circle", color: "#f6b511", outline: white06 } },
-            { value: "Wind", symbol: { type: "simple-marker", style: "circle", color: "#17a2a2", outline: white06 } },
-            { value: "Biomass", symbol: { type: "simple-marker", style: "circle", color: "#4c9a2a", outline: white06 } },
-          ],
-          visualVariables: [
-            {
-              type: "size",
-              field: "capacity_mw",
-              legendOptions: { title: "Capacity (MW)" },
-              minDataValue: 1,
-              maxDataValue: 900,
-              minSize: 5,
-              maxSize: 32,
-            } as __esri.SizeVariableProperties,
+            { value: "line", label: "Transmission line", symbol: { type: "simple-line", color: "#e4322b", width: 1 } },
+            { value: "substation", label: "Substation", symbol: { type: "simple-marker", style: "square", size: 4, color: "#151513", outline: { color: "#ffffff", width: 0.4 } } },
           ],
         },
-        popupTemplate: { title: "{name}", content: "Fuel: {fuel}<br/>Capacity: {capacity_mw} MW" },
+        popupTemplate: { title: "Power {kind}", content: "Part of the Philippine transmission grid (OpenStreetMap)." },
       },
     ],
     sourceBox: { rows: [
-      ["Plants", "WRI Global Power Plant Database (PH)"],
-      ["Count", "123 — all fuels, sized by MW"],
-      ["Note", "Coal still leads installed capacity"],
+      ["Grid", "OpenStreetMap power = line / substation"],
+      ["Count", "3,644 lines + 1,010 substations"],
+      ["Power", "The physical network that moves electricity"],
     ] },
   },
 
@@ -151,33 +134,34 @@ export const dayMapConfigs: Record<number, MapConfig> = {
     ] },
   },
 
-  // 15 — Inside out. Water where the land is: the figure–ground inverted.
+  // 15 — Inside out. The lakes become the land: figure and ground swapped.
   15: {
-    ariaLabel: "An inverted map of the Philippines with the land filled as if it were water",
-    center: [122.8, 12.0],
-    zoom: 5,
+    ariaLabel: "An inside-out map where the lakes of the Philippines read as land on a water background",
+    center: [122.0, 13.5],
+    zoom: 6,
     basemap: "none",
-    background: "#efe6d0",
-    fitToLayerIndex: 0,
+    background: "#2b6cb0",
+    fitToLayerIndex: null,
     loadingLabel: "Inverting",
     layers: [
       {
-        url: "/days/day15/country.geojson",
-        title: "Land as water",
+        url: "/days/day15/lakes.geojson",
+        title: "Lakes as islands",
         renderer: {
           type: "simple",
           symbol: {
             type: "simple-fill",
-            color: "#2b6cb0",
-            outline: { color: "#1a4e86", width: 0.8 },
+            color: "#efe6d0",
+            outline: { color: "#cbb98f", width: 0.8 },
           },
         },
+        popupTemplate: { title: "{name}", content: "A lake — here drawn as if it were land." },
       },
     ],
     sourceBox: { rows: [
-      ["Outline", "Philippine land area (PSA/PSGC)"],
-      ["Trick", "Land is painted as sea, sea as land"],
-      ["Prompt", "Inside out — something isn't right"],
+      ["Lakes", "Major Philippine lakes (OpenStreetMap)"],
+      ["Trick", "Water is painted as land, land as water"],
+      ["Prompt", "Inside out — the lakes become islands"],
     ] },
   },
 
@@ -331,10 +315,10 @@ export const dayMapConfigs: Record<number, MapConfig> = {
     ] },
   },
 
-  // 20 — Hexagons. A quarter-century of seismicity, binned.
+  // 20 — Hexagons. Settlement density, binned into bestagons.
   20: {
-    ariaLabel: "Hexagon-binned map of Philippine earthquake density",
-    center: [123.5, 12.2],
+    ariaLabel: "Hexagon-binned map of Philippine settlement density",
+    center: [122.8, 12.0],
     zoom: 5,
     minZoom: 4,
     basemap: "gray",
@@ -344,26 +328,26 @@ export const dayMapConfigs: Record<number, MapConfig> = {
     layers: [
       {
         url: "/days/day20/hexbins.geojson",
-        title: "Earthquakes per hexagon",
+        title: "Settlements per hexagon",
         renderer: {
           type: "class-breaks",
           field: "count",
-          legendOptions: { title: "Earthquakes (M4.5+) per hex" },
+          legendOptions: { title: "Towns & cities per hex" },
           classBreakInfos: [
-            { minValue: 1, maxValue: 5, label: "1 – 5", symbol: { type: "simple-fill", color: "#fee5d9", outline: white06 } },
-            { minValue: 5, maxValue: 20, label: "5 – 20", symbol: { type: "simple-fill", color: "#fcae91", outline: white06 } },
-            { minValue: 20, maxValue: 60, label: "20 – 60", symbol: { type: "simple-fill", color: "#fb6a4a", outline: white06 } },
-            { minValue: 60, maxValue: 150, label: "60 – 150", symbol: { type: "simple-fill", color: "#de2d26", outline: white06 } },
-            { minValue: 150, maxValue: 100000, label: "150+", symbol: { type: "simple-fill", color: "#a50f15", outline: white06 } },
+            { minValue: 1, maxValue: 2, label: "1 – 2", symbol: { type: "simple-fill", color: "#fee5d9", outline: white06 } },
+            { minValue: 2, maxValue: 5, label: "2 – 5", symbol: { type: "simple-fill", color: "#fcae91", outline: white06 } },
+            { minValue: 5, maxValue: 10, label: "5 – 10", symbol: { type: "simple-fill", color: "#fb6a4a", outline: white06 } },
+            { minValue: 10, maxValue: 20, label: "10 – 20", symbol: { type: "simple-fill", color: "#de2d26", outline: white06 } },
+            { minValue: 20, maxValue: 100000, label: "20+", symbol: { type: "simple-fill", color: "#a50f15", outline: white06 } },
           ],
         },
-        popupTemplate: { title: "Hexagon", content: "<b>{count}</b> earthquakes (M4.5+) since 2000" },
+        popupTemplate: { title: "Hexagon", content: "<b>{count}</b> towns & cities in this cell" },
       },
     ],
     sourceBox: { rows: [
-      ["Events", "USGS ANSS ComCat, M4.5+ (2000–2026)"],
-      ["Bins", "353 hexagons (~37 km across)"],
-      ["Hotspots", "Darkest hexes trace the trenches"],
+      ["Places", "OpenStreetMap towns & cities (place nodes)"],
+      ["Bins", "211 hexagons (~37 km across)"],
+      ["Density", "Darkest hexes are the urban cores"],
     ] },
   },
 
@@ -466,30 +450,31 @@ export const dayMapConfigs: Record<number, MapConfig> = {
     ] },
   },
 
-  // 25 — Is this a map? Seismicity as pointillist art.
+  // 25 — Is this a map? Typhoon tracks as abstract linework.
   25: {
-    ariaLabel: "An artistic rendering of Philippine earthquakes as points of light on black",
-    center: [123.5, 12.2],
-    zoom: 5,
-    minZoom: 4,
+    ariaLabel: "An artistic rendering of typhoon tracks crossing the Philippines",
+    center: [128.0, 15.0],
+    zoom: 4,
+    minZoom: 3,
     basemap: "none",
-    background: "#111110",
-    fitToLayerIndex: 0,
+    background: "#0b1a2b",
+    fitToLayerIndex: null,
     loadingLabel: "Composing",
     layers: [
       {
-        url: "/days/day25/quakes-art.geojson",
-        title: "Seismic field",
+        url: "/days/day25/typhoons.geojson",
+        title: "Typhoon tracks",
         renderer: {
           type: "simple",
-          symbol: { type: "simple-marker", style: "circle", size: 3, color: "rgba(228,50,43,0.55)", outline: { color: "rgba(0,0,0,0)", width: 0 } },
+          symbol: { type: "simple-line", color: "rgba(120,200,230,0.33)", width: 0.8 },
         },
+        popupTemplate: { title: "Typhoon {name} ({season})", content: "Peak wind: {max_wind_kt} kt" },
       },
     ],
     sourceBox: { rows: [
-      ["Marks", "8,027 earthquake epicenters (USGS)"],
-      ["Basemap", "None — the data draws the islands"],
-      ["Question", "Is this a map, or a picture?"],
+      ["Tracks", "437 tropical cyclones, 2000–2024 (IBTrACS)"],
+      ["Basemap", "None — the storms trace the archipelago"],
+      ["Question", "Is this a map, or a painting of weather?"],
     ] },
   },
 
@@ -524,42 +509,37 @@ export const dayMapConfigs: Record<number, MapConfig> = {
     ] },
   },
 
-  // 28 — Senses: Feeling. The strong, widely-felt earthquakes.
+  // 28 — Senses: Feeling. Faith, mapped through places of worship.
   28: {
-    ariaLabel: "Map of strong, widely felt earthquakes in the Philippines",
-    center: [123.5, 12.2],
+    ariaLabel: "Map of places of worship across the Philippines by religion",
+    center: [122.8, 12.0],
     zoom: 5,
     minZoom: 4,
     basemap: "gray",
     fitToLayerIndex: 0,
-    loadingLabel: "Loading tremors",
+    legend: true,
+    loadingLabel: "Loading the faithful",
     layers: [
       {
-        url: "/days/day28/quakes-strong.geojson",
-        title: "Strong earthquakes (M6.5+)",
+        url: "/days/day28/worship.geojson",
+        title: "Places of worship",
         renderer: {
-          type: "simple",
-          symbol: { type: "simple-marker", style: "circle", color: "rgba(165,15,21,0.75)", outline: { color: "#ffffff", width: 1 } },
-          visualVariables: [
-            {
-              type: "size",
-              field: "mag",
-              legendOptions: { title: "Magnitude" },
-              stops: [
-                { value: 6.5, size: 12 },
-                { value: 7.0, size: 22 },
-                { value: 7.8, size: 38 },
-              ],
-            } as __esri.SizeVariableProperties,
+          type: "unique-value",
+          field: "religion",
+          legendOptions: { title: "Religion" },
+          uniqueValueInfos: [
+            { value: "Christian", symbol: { type: "simple-marker", style: "circle", size: 3.4, color: "rgba(228,50,43,0.7)", outline: { color: "rgba(0,0,0,0)", width: 0 } } },
+            { value: "Muslim", symbol: { type: "simple-marker", style: "circle", size: 3.4, color: "rgba(46,139,87,0.85)", outline: { color: "rgba(0,0,0,0)", width: 0 } } },
+            { value: "Other / unspecified", symbol: { type: "simple-marker", style: "circle", size: 3, color: "rgba(90,90,90,0.6)", outline: { color: "rgba(0,0,0,0)", width: 0 } } },
           ],
         },
-        popupTemplate: { title: "M{mag} earthquake", content: "{place}<br/>Year: {year} · Depth: {depth_km} km" },
+        popupTemplate: { title: "Place of worship", content: "Religion: {religion}" },
       },
     ],
     sourceBox: { rows: [
-      ["Events", "USGS ComCat, M6.5+ (2000–2026)"],
-      ["Count", "44 strong earthquakes"],
-      ["Feeling", "Each one felt across whole regions"],
+      ["Worship", "OpenStreetMap places of worship"],
+      ["Count", "18,836 — by religion"],
+      ["Feeling", "Faith: Christian red, Muslim green"],
     ] },
   },
 };
