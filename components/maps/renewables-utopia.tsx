@@ -56,6 +56,7 @@ export function RenewablesUtopiaMap() {
           { default: GeoJSONLayer },
           { default: Basemap },
           { default: TileLayer },
+          { default: Fullscreen },
           { default: Legend },
           reactiveUtils,
         ] = await Promise.all([
@@ -65,6 +66,7 @@ export function RenewablesUtopiaMap() {
           import("@arcgis/core/layers/GeoJSONLayer"),
           import("@arcgis/core/Basemap"),
           import("@arcgis/core/layers/TileLayer"),
+          import("@arcgis/core/widgets/Fullscreen"),
           import("@arcgis/core/widgets/Legend"),
           import("@arcgis/core/core/reactiveUtils"),
           import(
@@ -135,6 +137,7 @@ export function RenewablesUtopiaMap() {
 
         view.ui.add(new Legend({ view }), "bottom-right");
         view.ui.move("zoom", "top-right");
+        view.ui.add(new Fullscreen({ view }), "top-right");
 
         const sourceBox = document.createElement("div");
         sourceBox.className = "map-source-box";

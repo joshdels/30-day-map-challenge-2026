@@ -44,6 +44,7 @@ export function RegionalCapitalsMap() {
           { default: GeoJSONLayer },
           { default: Basemap },
           { default: TileLayer },
+          { default: Fullscreen },
           reactiveUtils,
         ] = await Promise.all([
           import("@arcgis/core/config"),
@@ -52,6 +53,7 @@ export function RegionalCapitalsMap() {
           import("@arcgis/core/layers/GeoJSONLayer"),
           import("@arcgis/core/Basemap"),
           import("@arcgis/core/layers/TileLayer"),
+          import("@arcgis/core/widgets/Fullscreen"),
           import("@arcgis/core/core/reactiveUtils"),
           import(
             "@esri/calcite-components/components/calcite-loader/customElement"
@@ -113,6 +115,7 @@ export function RegionalCapitalsMap() {
         if (!active) return;
 
         view.ui.move("zoom", "top-right");
+        view.ui.add(new Fullscreen({ view }), "top-right");
 
         const sourceBox = document.createElement("div");
         sourceBox.className = "map-source-box";

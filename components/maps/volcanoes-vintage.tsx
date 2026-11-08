@@ -53,6 +53,7 @@ export function VolcanoesVintageMap() {
           { default: Polyline },
           { default: Basemap },
           { default: TileLayer },
+          { default: Fullscreen },
           reactiveUtils,
         ] = await Promise.all([
           import("@arcgis/core/config"),
@@ -64,6 +65,7 @@ export function VolcanoesVintageMap() {
           import("@arcgis/core/geometry/Polyline"),
           import("@arcgis/core/Basemap"),
           import("@arcgis/core/layers/TileLayer"),
+          import("@arcgis/core/widgets/Fullscreen"),
           import("@arcgis/core/core/reactiveUtils"),
           import(
             "@esri/calcite-components/components/calcite-loader/customElement"
@@ -179,6 +181,7 @@ export function VolcanoesVintageMap() {
         if (!active) return;
 
         view.ui.move("zoom", "top-right");
+        view.ui.add(new Fullscreen({ view }), "top-right");
 
         const sourceBox = document.createElement("div");
         sourceBox.className = "map-source-box";

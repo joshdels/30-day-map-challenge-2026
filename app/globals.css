@@ -1167,6 +1167,22 @@ button:focus-visible {
 .vintage-map .arcgis-map-node canvas {
   filter: sepia(0.55) saturate(1.1) contrast(0.95) brightness(1.04);
 }
+/* Day 27 TimeSlider, added at the "manual" UI position — dock it bottom-centre
+   so it clears the bottom-left source box. */
+.day-timeslider {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  width: min(620px, 72%);
+  max-width: 620px;
+}
+@media (max-width: 640px) {
+  .day-timeslider {
+    width: 86%;
+    bottom: 10px;
+  }
+}
 .arcgis-map .esri-view {
   width: 100%;
   height: 100%;

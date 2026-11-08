@@ -54,6 +54,7 @@ export function MayonViewshedMap() {
           { default: SceneView },
           { default: Basemap },
           { default: TileLayer },
+          { default: Fullscreen },
           { default: ElevationLayer },
           { default: Ground },
           { default: ViewshedAnalysis },
@@ -66,6 +67,7 @@ export function MayonViewshedMap() {
           import("@arcgis/core/views/SceneView"),
           import("@arcgis/core/Basemap"),
           import("@arcgis/core/layers/TileLayer"),
+          import("@arcgis/core/widgets/Fullscreen"),
           import("@arcgis/core/layers/ElevationLayer"),
           import("@arcgis/core/Ground"),
           import("@arcgis/core/analysis/ViewshedAnalysis"),
@@ -135,6 +137,8 @@ export function MayonViewshedMap() {
 
         await view.when();
         if (!active) return;
+
+        view.ui.add(new Fullscreen({ view }), "top-right");
 
         // Themed "data source" panel, docked bottom-left (a child box of the
         // map). Reuses the site tokens via the .map-source-box class.

@@ -8,6 +8,11 @@ import { RegionalCapitalsMap } from "@/components/maps/regional-capitals";
 import { RenewablesUtopiaMap } from "@/components/maps/renewables-utopia";
 import { UrbanRuralMap } from "@/components/maps/urban-rural";
 import { PromptingAtlasMap } from "@/components/maps/prompting-atlas";
+import { Arcgis2DMap } from "@/components/maps/arcgis-2d-map";
+import { dayMapConfigs } from "@/lib/day-map-configs";
+import { GlobeProjectionMap } from "@/components/maps/globe-projection";
+import { QuakesTimeSliderMap } from "@/components/maps/quakes-timeslider";
+import { ElevationRasterMap } from "@/components/maps/elevation-raster";
 
 /**
  * Source attribution for an operational layer / dataset.
@@ -385,6 +390,497 @@ export const days: Partial<Record<number, DayContent>> = {
       },
     ],
     publishedAt: "2026-11-10",
+  },
+  11: {
+    dek: "A country has a sound, and some of it is engines.",
+    note: "The Philippines' airports, plotted as sources of aviation sound—from the roar of the international gateways to the single daily hum of a provincial strip.",
+    figLabel: "DATA / SOUND — AIRPORTS",
+    caption:
+      "Every airport in the Philippines, sized by class. Read each dot as a source of aircraft noise—loudest where the large hubs cluster around Manila, Cebu and Davao.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[11]} />,
+      credit: {
+        source: "OurAirports open community database",
+        license: "OurAirports — public domain",
+        retrieved: "2026-11-11",
+        coverage: "Philippines (iso_country = PH)",
+        fields: "name, type, iata, municipality",
+        transformations: "Filtered to large/medium/small airports in the PH; kept name, class, IATA and municipality as WGS 84 point GeoJSON.",
+        url: "https://ourairports.com/",
+      },
+    },
+    essay: [
+      { heading: "Mapping a sense you can't see.", body: "Sound has no shape, so a sound map must borrow one. Here the proxy is aviation: each airport is a place where the sky gets loud. The largest markers—Manila's NAIA, Mactan-Cebu, Davao—are the country's acoustic hotspots, where jet engines define the edge of whole neighbourhoods." },
+      { body: "Scattered across the provinces are the small strips, many with a single scheduled hum a day. Together they trace a second geography laid over the islands: not where people live, but where the noise of modern movement rises and falls." },
+    ],
+    publishedAt: "2026-11-11",
+  },
+  12: {
+    dek: "What actually keeps the lights on.",
+    note: "Every power plant in the Philippines, coloured by fuel and sized by capacity. Day 08 showed the clean-energy dream; this is the whole grid as it stands—coal and all.",
+    figLabel: "DATA / POWER — THE WHOLE GRID",
+    caption:
+      "The Philippines' electrical generation fleet, by fuel and capacity. Coal still carries the largest installed load; geothermal and hydro anchor the renewable base.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[12]} />,
+      credit: {
+        source: "World Resources Institute — Global Power Plant Database (v1.3.0)",
+        license: "WRI GPPD — CC BY 4.0",
+        retrieved: "2026-11-12",
+        coverage: "Philippines; all fuels",
+        fields: "name, fuel, capacity_mw",
+        transformations: "Filtered GPPD to country PHL (all fuels); kept name, fuel and capacity as WGS 84 GeoJSON. Snapshot ≤2021.",
+        url: "https://datasets.wri.org/dataset/globalpowerplantdatabase",
+      },
+    },
+    essay: [
+      { heading: "Power is physical before it is political.", body: "The prompt lets you read 'power' any way you like; this map takes it literally—electrical generation. Plotting the whole fleet alongside Day 08's renewables makes the honest comparison visible: the dark coal circles still dominate installed capacity, concentrated on the industrial coasts near the big load centres." },
+      { body: "Around them sit the geothermal fields of the volcanic belt, the hydro of the mountain provinces, and the newer solar and wind. The energy transition is the slow redistribution of these colours—watching coal shrink and the rest grow." },
+    ],
+    publishedAt: "2026-11-12",
+  },
+  13: {
+    dek: "The islands are a conversation between plates.",
+    note: "The active faults threading through and around the Philippines—the lines along which the crust slips, locks and ruptures. Day 04's earthquakes are what these interactions sound like.",
+    figLabel: "DATA / INTERACTIONS — ACTIVE FAULTS",
+    caption:
+      "Active fault traces in the Philippine region (GEM). These are the seams where crustal blocks interact—the Philippine Fault slicing the archipelago, the trenches bounding it east and west.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[13]} />,
+      credit: {
+        source: "GEM Foundation — Global Active Faults Database (harmonized)",
+        license: "GEM GAF-DB — CC BY 4.0",
+        retrieved: "2026-11-13",
+        coverage: "Philippine region (clipped by bounding box)",
+        fields: "name, slip_type",
+        transformations: "Selected fault traces intersecting the PH bounding box; kept name and slip type as WGS 84 line GeoJSON.",
+        url: "https://github.com/GEMScienceTools/gem-global-active-faults",
+      },
+    },
+    essay: [
+      { heading: "Every quake is an interaction.", body: "Geology is relational. These red lines are the interfaces where tectonic blocks meet and move past one another—and the Philippine Fault, running the length of the archipelago, is one of the most active strike-slip systems on Earth." },
+      { body: "Lay this map beside Day 04's seismic clusters and the relationship is unmistakable: the earthquakes are not random, they are the audible record of these faults interacting. The lines are the cause; the dots are the consequence." },
+    ],
+    publishedAt: "2026-11-13",
+  },
+  14: {
+    dek: "A map at the scale of the thing itself.",
+    note: "Borges imagined a map so detailed it covered the empire it described. This one zooms into Intramuros, Manila's walled old city, and draws every single building footprint—1,680 of them.",
+    figLabel: "DATA / BORGESIAN — INTRAMUROS 1:1",
+    caption:
+      "Every building footprint inside Intramuros, the Spanish-era walled city of Manila. At this scale the map stops summarising and starts simply reproducing—the Borgesian limit.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[14]} />,
+      credit: {
+        source: "OpenStreetMap contributors — building footprints",
+        license: "OpenStreetMap — ODbL",
+        retrieved: "2026-11-14",
+        coverage: "Intramuros, Manila (≈1.4 km²)",
+        fields: "building geometry",
+        transformations: "Overpass query for way[building] within the Intramuros bounding box; rendered as WGS 84 polygon GeoJSON.",
+        url: "https://www.openstreetmap.org/",
+      },
+    },
+    essay: [
+      { heading: "On exactitude in science.", body: "In Borges' one-paragraph fable, cartographers perfect their craft until the map of the empire is the size of the empire, and useless. The joke is also a limit: detail and abstraction pull against each other, and a map that abstracts nothing is just the territory again." },
+      { body: "Intramuros is the right place to test it—a dense, finite, storied square kilometre whose every structure can actually be drawn. Zoom in and the generalisation that makes maps useful quietly disappears, footprint by footprint." },
+    ],
+    publishedAt: "2026-11-14",
+  },
+  15: {
+    dek: "Paint the land as sea and see it fresh.",
+    note: "An inside-out map: the figure and ground are swapped, the land flooded blue and the sea left as pale paper. The familiar silhouette survives, but something is deliberately not right.",
+    figLabel: "DATA / INSIDE OUT — FIGURE & GROUND",
+    caption:
+      "The Philippines with its figure and ground inverted—land rendered as water, water as land. The outline is exact; only the convention is upside down.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      illustrative: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[15]} />,
+      credit: {
+        source: "Philippine land boundary (PSA/PSGC via faeldon PH JSON maps)",
+        license: "Open (PSA PSGC derived)",
+        retrieved: "2026-11-15",
+        coverage: "Philippines, national outline",
+        fields: "country polygon",
+        transformations: "National land polygon filled with the sea colour over a land-coloured background—an intentional figure–ground inversion. Styling only; geometry unaltered.",
+      },
+    },
+    essay: [
+      { heading: "The eye reads convention, not shape.", body: "We recognise the Philippines instantly—but partly because blue means sea and tan means land. Swap them and the brain stumbles, then re-reads: the shape is identical, yet it feels like a cluster of lakes, or a country turned inside out." },
+      { body: "That small act of estrangement is the point of the prompt. By breaking one unspoken rule of cartography, the map makes you notice how much of 'reading a map' is habit rather than seeing." },
+    ],
+    publishedAt: "2026-11-15",
+  },
+  16: {
+    dek: "A map no one person could have made.",
+    note: "Every hospital in the Philippines as recorded in OpenStreetMap—2,080 points, each placed by a volunteer. Clustered, they show a map built by a crowd.",
+    figLabel: "DATA / COLLABORATIVE — OSM HOSPITALS",
+    caption:
+      "Hospitals across the Philippines, contributed to OpenStreetMap by volunteers and clustered by location. Every dot is someone's edit; the whole is a map made collaboratively.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[16]} />,
+      credit: {
+        source: "OpenStreetMap contributors — amenity = hospital",
+        license: "OpenStreetMap — ODbL",
+        retrieved: "2026-11-16",
+        coverage: "Philippines (OSM relation, admin level 2)",
+        fields: "name",
+        transformations: "Overpass query for hospitals within the PH boundary; node/way/relation centroids kept as WGS 84 point GeoJSON; clustered client-side.",
+        url: "https://www.openstreetmap.org/",
+      },
+    },
+    essay: [
+      { heading: "Mapping as a public act.", body: "OpenStreetMap is the world's largest collaborative map—millions of contributors, no single author. This layer is one slice of that effort: the hospitals of the Philippines, each added by a person who walked past one, surveyed it, or traced it from imagery." },
+      { body: "Clustered, the points mirror the population: dense knots in Metro Manila, Cebu and Davao, thinner coverage in the uplands and smaller islands—which is also a map of where the crowd has, and hasn't, yet mapped." },
+    ],
+    publishedAt: "2026-11-16",
+  },
+  17: {
+    dek: "The mountains are written in shadow.",
+    note: "A hillshade of the Philippines—terrain modelled as light and shadow from a low sun—with the ten highest summits named. Relief needs no colour; it only needs a direction to be lit from.",
+    figLabel: "DATA / LIGHT & DARK — HILLSHADE",
+    caption:
+      "The Philippine landscape as pure light and shadow. A modelled sun rakes across the terrain; the ten highest peaks, from Apo to Pinatubo, are marked.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[17]} />,
+      credit: {
+        source: "Esri World Hillshade (global DEM, shaded relief); peak list compiled from public references",
+        license: "Esri World Hillshade — free to use",
+        retrieved: "2026-11-17",
+        coverage: "Philippines; 10 highest peaks",
+        fields: "name, elevation_m",
+        transformations: "Keyless hillshade basemap; ten named summits entered as WGS 84 point GeoJSON with elevation.",
+      },
+    },
+    essay: [
+      { heading: "Shadow is information.", body: "A hillshade carries no colour and no labels, yet it reads instantly as mountains, valleys and plains. All it encodes is how a hypothetical sun—here low in the north-west—would strike each slope: lit faces bright, hidden faces dark." },
+      { body: "Against that chiaroscuro the country's roof stands out: Apo in Mindanao, Dulang-dulang and Kitanglad on its spine, Pulag in the Cordillera. Light and dark is the oldest trick for turning elevation into a landscape the eye can feel." },
+    ],
+    publishedAt: "2026-11-17",
+  },
+  18: {
+    dek: "Almost nothing, on purpose.",
+    note: "NULL. A map stripped to a single outline on blank paper—no data, no fill, no labels. What remains when you remove everything is still, stubbornly, a map.",
+    figLabel: "DATA / NULL — THE EMPTY MAP",
+    caption:
+      "The Philippines reduced to its boundary and nothing else. The content of this map is the absence of content—an argument that an outline alone still means something.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[18]} />,
+      credit: {
+        source: "Philippine land boundary (PSA/PSGC via faeldon PH JSON maps)",
+        license: "Open (PSA PSGC derived)",
+        retrieved: "2026-11-18",
+        coverage: "Philippines, national outline",
+        fields: "country polygon",
+        transformations: "National outline drawn as a hairline over blank paper; every other layer deliberately omitted.",
+      },
+    },
+    essay: [
+      { heading: "Making something from nothing.", body: "NULL is the absence of a value. A null map, then, is a provocation: how little can remain and still be a map? Strip the fills, the roads, the names, the colour—keep only the line where land meets sea." },
+      { body: "What's left is nearly empty, and yet it is unmistakably the Philippines. The outline does the entire job, which is the quiet lesson: a map is less a pile of data than a single decision about where to draw the edge." },
+    ],
+    publishedAt: "2026-11-18",
+  },
+  19: {
+    dek: "An archipelago you could find with your eyes closed.",
+    note: "A smellscape—seven places chosen for what they give the nose: durian stalls, sulfur vents, fish ports, fermenting bagoong. The positions are real; the sense is interpretive.",
+    figLabel: "DATA / SMELL — A SMELLSCAPE",
+    caption:
+      "An illustrative smell map of the Philippines. Each marker is a real place known for a strong scent—Davao's durian, Taal's sulfur, Navotas' fish port—mapped as a sense rather than a statistic.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      illustrative: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[19]} />,
+      credit: {
+        source: "Representative places compiled for an illustrative smell map",
+        license: "Illustrative — public place references",
+        retrieved: "2026-11-19",
+        coverage: "Philippines; 7 indicative places",
+        fields: "place, note",
+        transformations: "Notable scent-associated places entered as WGS 84 points. Positions are indicative; the smell association is interpretive, not measured.",
+      },
+    },
+    essay: [
+      { heading: "How do you map a nose?", body: "Smell resists cartography—it has no coordinates, no units, no edges. So this map cheats honestly: it marks places whose scent is part of their identity. Davao is durian; Taal is sulfur; Navotas is the brine of the country's largest fish port." },
+      { body: "The result is not a measurement but an invitation to remember. A Filipino reading it can almost smell each dot. Flagged illustrative, it argues that some maps work on recognition and association rather than data." },
+    ],
+    publishedAt: "2026-11-19",
+  },
+  20: {
+    dek: "The good old bestagons.",
+    note: "Day 04's 8,027 earthquakes, re-aggregated into hexagons. Binning trades the exact point for the honest pattern—each hex shaded by how many epicenters it holds.",
+    figLabel: "DATA / HEXAGONS — SEISMIC BINS",
+    caption:
+      "Philippine seismicity (M4.5+, 2000–2026) binned into hexagons and shaded by count. The darkest hexes mark the densest clusters along the trenches.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[20]} />,
+      credit: {
+        source: "USGS ANSS ComCat (M4.5+ epicenters), hex-binned",
+        license: "USGS earthquake data — public domain",
+        retrieved: "2026-11-20",
+        coverage: "Philippine region, 2000–2026",
+        fields: "count (earthquakes per hexagon)",
+        transformations: "8,027 epicenters assigned to a ~0.33° hexagonal grid; per-hex counts written as WGS 84 polygon GeoJSON (353 hexes).",
+        url: "https://earthquake.usgs.gov/",
+      },
+    },
+    essay: [
+      { heading: "Why hexagons.", body: "Square grids distort: a cell's neighbours sit at unequal distances, and the eye invents lines along the rows. Hexagons solve both—every bin has six equidistant neighbours, so the aggregation adds no false grain of its own. They tile the plane as fairly as a regular shape can." },
+      { body: "Re-binning Day 04's scatter into hexagons turns a smear of 8,027 dots into a clean density surface. The hotspots that clustering hinted at now read as solid blocks of colour, following the Manila and Philippine trenches." },
+    ],
+    publishedAt: "2026-11-20",
+  },
+  21: {
+    dek: "The world's map, drawn by everyone.",
+    note: "The road network of Cebu City, pulled straight from OpenStreetMap—8,658 segments from national highways down to residential lanes, the free map of the world at street scale.",
+    figLabel: "DATA / OPENSTREETMAP — CEBU ROADS",
+    caption:
+      "Cebu City's streets as mapped in OpenStreetMap. Major arteries in red, the residential weave in grey—an open dataset anyone can read, use, and improve.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[21]} />,
+      credit: {
+        source: "OpenStreetMap contributors — highway network",
+        license: "OpenStreetMap — ODbL",
+        retrieved: "2026-11-21",
+        coverage: "Cebu City, Philippines",
+        fields: "road class (major / minor)",
+        transformations: "Overpass query for way[highway] in the Cebu City bounding box; classified major vs minor and kept as WGS 84 line GeoJSON.",
+        url: "https://www.openstreetmap.org/",
+      },
+    },
+    essay: [
+      { heading: "The awesome open dataset.", body: "OpenStreetMap is the prompt's whole subject: a global map built and owned by its users, free to anyone. Cebu—the country's oldest city—shows what that looks like at street level: a dense, living network maintained by local mappers." },
+      { body: "The red arteries carry the city's traffic between port, centre and hills; the grey filigree is the residential grain where people actually live. None of it came from a government licence or a paywall—just the collective, patient work of the crowd." },
+    ],
+    publishedAt: "2026-11-21",
+  },
+  22: {
+    dek: "The only map that doesn't lie about shape.",
+    note: "Projections flatten a sphere, and every one of them distorts something—area, angle, distance. So this map refuses to flatten: the Philippines on a true globe you can spin.",
+    figLabel: "DATA / PROJECTIONS — ON THE GLOBE",
+    caption:
+      "The Philippines returned to a sphere. Drag to rotate; the curvature you see is exactly what every flat projection has to stretch, shear or tear away.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <GlobeProjectionMap />,
+      credit: {
+        source: "Philippine land boundary (PSA/PSGC) on an ArcGIS 3D globe; keyless Esri basemap",
+        license: "Open (PSA PSGC derived); Esri basemap — free to use",
+        retrieved: "2026-11-22",
+        coverage: "Philippines on a global 3D view",
+        fields: "country polygon",
+        transformations: "National outline draped on a 3D globe (SceneView, global viewing mode). No projection applied beyond the sphere itself.",
+      },
+    },
+    essay: [
+      { heading: "Every flat map is a compromise.", body: "You cannot flatten a sphere without tearing it—a theorem older than modern cartography. Mercator preserves angles but inflates the poles; equal-area maps keep size but bend shape. Each projection chooses what to sacrifice." },
+      { body: "The globe sacrifices nothing except the convenience of a flat page. Seeing the Philippines on it is a reminder that the archipelago straddles a curved surface, and that every other map in this gallery has quietly agreed to distort that truth to lie flat." },
+    ],
+    publishedAt: "2026-11-22",
+  },
+  23: {
+    dek: "A country you can taste by region.",
+    note: "A taste map: ten regions, ten things they are known for—Cebu's lechon, Davao's durian, Vigan's empanada, Pampanga's sisig. Representative, flavourful, and unapologetically subjective.",
+    figLabel: "DATA / TASTE — REGIONAL FLAVOURS",
+    caption:
+      "An illustrative taste map of the Philippines, each marker a dish a place is famous for. Not a dataset so much as a menu drawn across the islands.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      illustrative: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[23]} />,
+      credit: {
+        source: "Iconic regional specialties compiled for an illustrative taste map",
+        license: "Illustrative — public culinary references",
+        retrieved: "2026-11-23",
+        coverage: "Philippines; 10 indicative places",
+        fields: "dish, place",
+        transformations: "Well-known regional dishes placed at a representative city as WGS 84 points. Indicative, not exhaustive or survey data.",
+      },
+    },
+    essay: [
+      { heading: "Flavour has a geography.", body: "Filipino food is regional to its core: Cebu claims lechon, Davao durian, the Ilocos its bagnet and empanada, Pampanga the sizzling sisig that calls itself the culinary capital's own. Taste, mapped, becomes a tour of local pride." },
+      { body: "This is a subjective map and says so—ten dishes could as easily be fifty. But that is also the honesty of the senses: a taste map is an argument about identity, and every Filipino will want to add their hometown's dish to it." },
+    ],
+    publishedAt: "2026-11-23",
+  },
+  24: {
+    dek: "The capital's iron spine.",
+    note: "Metro Manila's rail network—LRT-1, LRT-2, MRT-3 and the PNR commuter lines—drawn as the connected system it is meant to be. A network in the truest sense: nodes joined by routes.",
+    figLabel: "DATA / NETWORK — METRO MANILA RAIL",
+    caption:
+      "The rail transit network of Metro Manila. Three light-rail and metro lines plus the PNR commuter services, each a coloured thread through the densest city in the country.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[24]} />,
+      credit: {
+        source: "OpenStreetMap contributors — transit route relations",
+        license: "OpenStreetMap — ODbL",
+        retrieved: "2026-11-24",
+        coverage: "Metro Manila, Philippines",
+        fields: "line",
+        transformations: "Overpass query for light_rail/subway/train route relations in Metro Manila; member ways merged per line into WGS 84 line GeoJSON.",
+        url: "https://www.openstreetmap.org/",
+      },
+    },
+    essay: [
+      { heading: "A network is routes plus the gaps between them.", body: "A transit map is the clearest everyday example of network thinking: lines that matter only where they connect. Metro Manila's rail spine—LRT-1 down the bay, LRT-2 across, MRT-3 along EDSA, the PNR running north–south—carries millions of daily trips." },
+      { body: "Drawn together, the lines also expose what a network lacks: the parts of the metropolis they never reach. The story of Manila's transit is as much about the missing links as the built ones, which is why the map of the network is also a map of its ambitions." },
+    ],
+    publishedAt: "2026-11-24",
+  },
+  25: {
+    dek: "When does data stop being a map?",
+    note: "No basemap, no labels, no borders—just 8,027 earthquakes glowing on black. The islands appear anyway, drawn entirely by where the ground has shaken. Is this a map, or a picture of one?",
+    figLabel: "DATA / IS THIS A MAP? — SEISMIC FIELD",
+    caption:
+      "Philippine seismicity as pointillist art: every epicenter a faint red spark on black, no reference layer at all. The familiar archipelago emerges from the data alone.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[25]} />,
+      credit: {
+        source: "USGS ANSS ComCat — M4.5+ epicenters (2000–2026)",
+        license: "USGS earthquake data — public domain",
+        retrieved: "2026-11-25",
+        coverage: "Philippine region, 2000–2026",
+        fields: "mag",
+        transformations: "8,027 epicenters rendered as translucent sparks on a black field with no basemap; the point cloud alone defines the geography.",
+        url: "https://earthquake.usgs.gov/",
+      },
+    },
+    essay: [
+      { heading: "The line between map and image.", body: "Strip a map of its scaffolding—coastlines, graticule, labels—and what survives? Here, only the earthquakes. Yet the Philippines materialises regardless, because seismicity traces the plate boundaries that made the islands in the first place." },
+      { body: "That ambiguity is the prompt. The piece reads as abstract art and as a precise dataset at once; whether you call it a map depends on whether you think a map needs a frame, or just needs to be true." },
+    ],
+    publishedAt: "2026-11-25",
+  },
+  26: {
+    dek: "Mostly, the Philippines is water.",
+    note: "The nation's Exclusive Economic Zone—the vast maritime territory it governs—draped over the archipelago. The land is the small part; the sea is the country too.",
+    figLabel: "DATA / WATER — THE EEZ",
+    caption:
+      "The Philippine Exclusive Economic Zone. The blue expanse dwarfs the islands inside it—a reminder that this is a maritime nation first, a land one second.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[26]} />,
+      credit: {
+        source: "Marine Regions (Flanders Marine Institute / VLIZ) — world EEZ boundaries",
+        license: "Marine Regions — CC BY 4.0",
+        retrieved: "2026-11-26",
+        coverage: "Philippine Exclusive Economic Zone",
+        fields: "EEZ polygon",
+        transformations: "Selected the Philippine EEZ polygon; simplified (~0.02°) and written as WGS 84 GeoJSON.",
+        url: "https://www.marineregions.org/",
+      },
+    },
+    essay: [
+      { heading: "Seventy-one percent, made national.", body: "The prompt is water, and for the Philippines water is not a backdrop but the bulk of the country. Its Exclusive Economic Zone—reaching 200 nautical miles out—covers roughly two million square kilometres, many times the land area." },
+      { body: "Inside that blue are fisheries that feed the nation, shipping lanes, and contested reefs. To draw the EEZ is to draw the real extent of the Philippines: an archipelagic state whose territory is mostly sea." },
+    ],
+    publishedAt: "2026-11-26",
+  },
+  27: {
+    dek: "Press play on a quarter-century of shaking.",
+    note: "A new tool for this gallery: the ArcGIS TimeSlider. The same 8,027 epicenters as Day 04, but animated—drag or play the slider and watch them accumulate from 2000 to 2026.",
+    figLabel: "DATA / NEW TOOL — TIMESLIDER",
+    caption:
+      "Philippine seismicity through time. Use the slider to step or play through the years; epicenters build up cumulatively, revealing when and where the ground moved.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <QuakesTimeSliderMap />,
+      credit: {
+        source: "USGS ANSS ComCat — M4.5+ epicenters (2000–2026)",
+        license: "USGS earthquake data — public domain",
+        retrieved: "2026-11-27",
+        coverage: "Philippine region, 2000–2026",
+        fields: "mag, year, date",
+        transformations: "Each epicenter stamped with a year date; the ArcGIS TimeSlider animates them cumulatively by year over the loaded GeoJSON.",
+        url: "https://earthquake.usgs.gov/",
+      },
+    },
+    essay: [
+      { heading: "Trying a tool for the first time.", body: "The prompt asks you to add something new to your workflow. For this gallery that is the TimeSlider—a widget that binds a layer's time field to a playable control, turning a static scatter into a chronology." },
+      { body: "Animated, the earthquakes stop being a single blurred mass and become a sequence: quiet stretches, then bursts around major events, each year adding its marks. The data hasn't changed since Day 04—only the tool, and with it, what you can see." },
+    ],
+    publishedAt: "2026-11-27",
+  },
+  28: {
+    dek: "The feeling of the ground giving way.",
+    note: "A feeling is hard to map, so this one maps its cause: the strong earthquakes—magnitude 6.5 and above—that whole regions have felt in their bones since 2000.",
+    figLabel: "DATA / FEELING — THE STRONG ONES",
+    caption:
+      "The 44 strongest Philippine earthquakes (M6.5+, 2000–2026), sized by magnitude. Each is a tremor felt across entire provinces—the sense of the earth moving, mapped by its source.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <Arcgis2DMap config={dayMapConfigs[28]} />,
+      credit: {
+        source: "USGS ANSS ComCat — M6.5+ earthquakes (2000–2026)",
+        license: "USGS earthquake data — public domain",
+        retrieved: "2026-11-28",
+        coverage: "Philippine region, 2000–2026",
+        fields: "mag, place, year, depth_km",
+        transformations: "Filtered the Day 04 catalogue to magnitude 6.5 and above (44 events); sized by magnitude as WGS 84 point GeoJSON.",
+        url: "https://earthquake.usgs.gov/",
+      },
+    },
+    essay: [
+      { heading: "Mapping the most abstract sense.", body: "How do you map a feeling? One honest answer is to map what produces it. A magnitude-7 earthquake is not a statistic to the people above it—it is a felt thing, furniture walking, the ground becoming unreliable." },
+      { body: "These 44 events are the ones strong enough to be felt across whole regions: Bohol in 2013, Surigao, Masbate, the Davao sequence. Sized by magnitude, they map the geography of a sensation the whole country knows—the feeling of standing on ground that moves." },
+    ],
+    publishedAt: "2026-11-28",
+  },
+  29: {
+    dek: "The land, one pixel at a time.",
+    note: "Pure raster: no points, no lines, just elevation imagery coloured by height. Every pixel of the terrain carries a number, and the number becomes colour—green shore to pale summit.",
+    figLabel: "DATA / RASTER — ELEVATION PIXELS",
+    caption:
+      "The Philippines rendered as an elevation raster. A hypsometric ramp turns each pixel's height into colour—lowlands green, uplands brown, the highest ground almost white.",
+    media: {
+      kind: "custom",
+      bleed: true,
+      render: () => <ElevationRasterMap />,
+      credit: {
+        source: "Esri WorldElevation3D / Terrain3D global elevation imagery (keyless)",
+        license: "Esri Terrain3D — free to use",
+        retrieved: "2026-11-29",
+        coverage: "Philippines (global DEM, viewed over the archipelago)",
+        fields: "elevation (metres) per pixel",
+        transformations: "Streamed the elevation ImageServer as an ImageryTileLayer; applied a min–max stretch (0–2,900 m) through a hypsometric colour ramp. No vectorisation.",
+        url: "https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-ImageryTileLayer.html",
+      },
+    },
+    essay: [
+      { heading: "Do something cool with pixels.", body: "Every other map in this gallery mostly draws vectors—points, lines, polygons. A raster is different: a grid of cells, each holding a value. Here the value is elevation, and the whole landscape is nothing but those numbers made visible." },
+      { body: "The hypsometric tint is the classic raster move: map height to colour so the terrain reads at a glance. Luzon's Cordillera, the volcanic cones, Mindanao's highlands all surface as warm ridges rising out of the green coastal plains—geography rendered pixel by pixel." },
+    ],
+    publishedAt: "2026-11-29",
   },
 };
 
